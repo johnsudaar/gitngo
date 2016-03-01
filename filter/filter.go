@@ -1,10 +1,6 @@
 package filter
 
-import (
-	"log"
-
-	"github.com/johnsudaar/gitngo/gitprocessor"
-)
+import "github.com/johnsudaar/gitngo/gitprocessor"
 
 // Filter will filter each repository found and count the number of lines of code written in the language passed as parameter.
 func Filter(repositories []gitprocessor.GitRepository, language string) Stats {
@@ -39,7 +35,6 @@ func Filter(repositories []gitprocessor.GitRepository, language string) Stats {
 	}
 	// Resizing the array to the right size.
 	stats.Repositories = stats.Repositories[:curPos]
-	log.Println(len(stats.Repositories))
 	return stats
 }
 

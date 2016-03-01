@@ -1,0 +1,7 @@
+{{define "content"}}
+  {{range .Repositories}}
+    <p> NEW </p>
+    <p>{{.Repository.FullName}}</p>
+    <p>{{.Lines}} </p>
+  {{end}}
+{{end}}
