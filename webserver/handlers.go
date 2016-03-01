@@ -18,8 +18,17 @@ func indexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 // GET : /search?query=<QUERY>
 func searchHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	query := r.URL.Query().Get("query")
+	customQuery := r.URL.Query().Get("custom")
 	language := r.URL.Query().Get("language")
-	repositories := gitprocessor.GetGithubRepositories(query)
-	stats := filter.Filter(repositories, language)
-	render(w, "search.html.tmpl", stats)
+	if len(language) == 0 {
+		http.Redirect(w, r, "/", 307)
+	} else {
+		if len(customQuery) == 0 || len(query) == 0 {
+			query = "stars:>=0"
+		}
+
+		repositories := gitprocessor.GetGithubRepositories(query)
+		stats := filter.Filter(repositories, language)
+		render(w, "search.html.tmpl", stats)
+	}
 }
