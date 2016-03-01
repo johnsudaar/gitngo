@@ -1,14 +1,15 @@
 # GitNGo
 
 ## Utilisation
-Une fois lancée, le serveur donne accès à deux ressources :
+Une fois lancé, le serveur donne accès à deux ressources :
 
 ### Acceuil
 
 `Path : GET / `
 
-Cette route correspond à la page d'accueil du site web. Elle met à votre disposition un formulaire vous permettant de choisir le langage sur lequel vous voulez filtrer.
-De base cette recherche va se faire sur les 100 derniers projets mis a jour, mais en activant la recherche avancée, vous pouvez spécifier un champ de recherche et chercher les 100 derniers projets mise à jour par docker (en utilisant le filtre : `user:docker`).
+Cette route correspond à la page d'accueil du site web. Cette page vous permet de choisir le langage sur lequel vous voulez filtrer.
+
+De base cette recherche va se faire sur les 100 derniers projets mis à jour, mais en activant la recherche avancée, vous pouvez spécifier un champ de recherche et chercher, par exemple, les 100 derniers projets mise à jour par docker (en utilisant le filtre : `user:docker`).
 
 Notes :
 * Le filtre langage est sensible à la casse.
@@ -17,9 +18,8 @@ Notes :
 ### Recherche
 `Path : GET /search`
 
-Cette page va chercher et présenter les résultats spécifiés en paramètres.
+Cette page va chercher et présenter les résultats en fonction de 3 paramètres.
 
-Elle accepte 3 paramètres :
 * language : Doit obligatoirement être présent, permet de chosir le language sur lequel on veut filtrer.
 * custom : Doit être sur 'on' si l'on veut faire une recherche avancée.
 * query : la requète a executer (le champ custom doit être présent pour que ce champ soit pris en compte)
