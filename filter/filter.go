@@ -1,13 +1,19 @@
 package filter
 
-import "github.com/johnsudaar/gitngo/gitprocessor"
+import (
+	"log"
+	"sort"
+	"strconv"
+
+	"github.com/johnsudaar/gitngo/gitprocessor"
+)
 
 // Filter will filter each repository found and count the number of lines of code written in the language passed as parameter.
 func Filter(repositories []gitprocessor.GitRepository, language string) Stats {
 
 	// Will define the number of subroutines launched
 	maxRoutines := 10
-
+	log.Println("[FILTER] Starting with " + strconv.Itoa(maxRoutines) + " routines...")
 	// Two channels are made 1 if the language is found in the repository and 1 if the language is not found
 	ok := make(chan RepositoryStats, len(repositories))
 	failed := make(chan int, len(repositories))
@@ -44,8 +50,13 @@ func Filter(repositories []gitprocessor.GitRepository, language string) Stats {
 			go filterWorker(repositories[i], language, ok, failed)
 		}
 	}
+	log.Println("[FILTER] Resizing and sorting...")
 	// Resizing the array to the right size.
 	stats.Repositories = stats.Repositories[:curPos]
+
+	sort.Sort(sort.Reverse(stats))
+
+	log.Println("[FILTER] Done !")
 	return stats
 }
 

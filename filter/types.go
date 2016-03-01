@@ -16,3 +16,15 @@ type Stats struct {
 	Total        int
 	Repositories []RepositoryStats
 }
+
+// The Len, Swap and Less methods are here to implement the sort.Interface
+// So the Stats object is sortable by number of line.
+func (s Stats) Len() int {
+	return len(s.Repositories)
+}
+func (s Stats) Swap(i, j int) {
+	s.Repositories[i], s.Repositories[j] = s.Repositories[j], s.Repositories[i]
+}
+func (s Stats) Less(i, j int) bool {
+	return s.Repositories[i].Lines < s.Repositories[j].Lines
+}
