@@ -1,11 +1,29 @@
 # GitNGo
 
+## Installation
+
+Ce package est disponible à l'adresse : `github.com/johnsudaar/gitngo/`.
+
+Nous pouvons donc utiliser go get :
+```shell
+go get github.com/johnsudaar/gitngo
+go install github.com/johnsudaar/gitngo
+```
+
 ## Lancement
 
 Par défaut le serveur se lance sur le port 8080. Cependant ceci peut être changé en utilisant le flag `--port`.
 
 Par défaut le serveur envoie des requêtes anonymes à l'api GITHUB. Cependant le mode anonyme est limité et peut conduire à des plantages.
 Pour utiliser le mode authentifié il suffit de mettre le token d'indentication dans la variable d'environnement `GITHUB_KEY`
+
+## Lancement avec docker
+
+Une image est disponible sur le docker hub. Pour lancer le service il suffit donc de lancer la commande suivante :
+
+```shell
+docker run --name="gitngo" --publish="8080:8080" --env="GITHUB_KEY=<KEY>" johnsudaar/gitngo
+```
 
 ## Utilisation
 Une fois lancé, le serveur donne accès à deux ressources :
