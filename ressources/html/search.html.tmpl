@@ -9,10 +9,12 @@
     <tbody>
       {{range .Repositories}}
         <tr>
-          <td>{{.Repository.FullName}}</td>
+          <td>
+            <a target="_blank" href="{{.Repository.HTMLURL}}"> {{.Repository.FullName}}</a>
+          </td>
           <td>{{.Lines}} </td>
           <td>
-            <a class="btn btn-success" href="#" role="button">View</a>
+            <a target="_blank" class="btn btn-success" href="{{.Repository.HTMLURL}}" role="button">View</a>
           </td>
         </tr>
       {{end}}

@@ -14,6 +14,7 @@ type GitRepository struct {
 	Name     string `json:"name"`
 	Language string `json:"language"`
 	FullName string `json:"full_name"`
+	HTMLURL  string `json:"html_url"`
 }
 
 // gitQuery is the main structure used by the github search api.
