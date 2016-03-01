@@ -47,7 +47,7 @@ func Filter(repositories []gitprocessor.GitRepository, language string) Stats {
 		// At this point we know that a subroutine has terminated so its safe to re-run one.
 		if i+maxRoutines < len(repositories) {
 			// Run one
-			go filterWorker(repositories[i], language, ok, failed)
+			go filterWorker(repositories[i+maxRoutines], language, ok, failed)
 		}
 	}
 	log.Println("[FILTER] Resizing and sorting...")
