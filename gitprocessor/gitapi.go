@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/dghubble/sling"
 )
@@ -11,6 +12,11 @@ import (
 // An hepler function used to construct the client needed to make HTTP request to the github API.
 func getSling(path string) *sling.Sling {
 	gitBase := sling.New().Base("https://api.github.com/").Client(&http.Client{})
+	gitBase = gitBase.Set("User-Agent", "gitngo")
+	gitKey := os.Getenv("GITHUB_KEY")
+	if len(gitKey) != 0 {
+		gitBase = gitBase.Set("Authorization", "token "+gitKey)
+	}
 	return gitBase.Get(path)
 }
 

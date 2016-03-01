@@ -1,5 +1,12 @@
 # GitNGo
 
+## Lancement
+
+Par défaut le serveur se lance sur le port 8080. Cependant ceci peut être changé en utilisant le flag `--port`.
+
+Par défaut le serveur envoie des requêtes anonymes à l'api GITHUB. Cependant le mode anonyme est limité et peut conduire à des plantages.
+Pour utiliser le mode authentifié il suffit de mettre le token d'indentication dans la variable d'environnement `GITHUB_KEY`
+
 ## Utilisation
 Une fois lancé, le serveur donne accès à deux ressources :
 
