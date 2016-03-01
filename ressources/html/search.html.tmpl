@@ -1,7 +1,21 @@
 {{define "content"}}
-  {{range .Repositories}}
-    <p> NEW </p>
-    <p>{{.Repository.FullName}}</p>
-    <p>{{.Lines}} </p>
-  {{end}}
+  <table class="table table-striped">
+    <h3> {{.Language}} : {{.Total}} </h3>
+    <thead>
+      <th> Repository </th>
+      <th> {{.Language}} bytes </th>
+      <th> Link </th>
+    </thead>
+    <tbody>
+      {{range .Repositories}}
+        <tr>
+          <td>{{.Repository.FullName}}</td>
+          <td>{{.Lines}} </td>
+          <td>
+            <a class="btn btn-success" href="#" role="button">View</a>
+          </td>
+        </tr>
+      {{end}}
+    <tbody>
+  </table>
 {{end}}
