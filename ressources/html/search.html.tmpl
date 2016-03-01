@@ -1,23 +1,32 @@
 {{define "content"}}
-  <table class="table table-striped">
-    <h3> {{.Language}} : {{.Total}} </h3>
-    <thead>
-      <th> Repository </th>
-      <th> {{.Language}} bytes </th>
-      <th> Link </th>
-    </thead>
-    <tbody>
-      {{range .Repositories}}
-        <tr>
-          <td>
-            <a target="_blank" href="{{.Repository.HTMLURL}}"> {{.Repository.FullName}}</a>
-          </td>
-          <td>{{.Lines}} </td>
-          <td>
-            <a target="_blank" class="btn btn-success" href="{{.Repository.HTMLURL}}" role="button">View</a>
-          </td>
-        </tr>
-      {{end}}
-    <tbody>
-  </table>
+  <h3> {{.Language}} : {{.Total}} Bytes</h3>
+  <div id="piecontainer">
+  </div>
+  <div id="barcontainer">
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <th> Repository </th>
+        <th> {{.Language}} bytes </th>
+        <th> Link </th>
+      </thead>
+      <tbody>
+        {{range .Repositories}}
+          <tr>
+            <td>
+              <a target="_blank" href="{{.Repository.HTMLURL}}"> {{.Repository.FullName}}</a>
+            </td>
+            <td>{{.Lines}} </td>
+            <td>
+              <a target="_blank" class="btn btn-success" href="{{.Repository.HTMLURL}}" role="button">View</a>
+            </td>
+          </tr>
+        {{end}}
+      <tbody>
+    </table>
+  </div>
+  <script>
+  repositories = {{marshal .Repositories}}
+  </script>
 {{end}}
