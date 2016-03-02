@@ -1,5 +1,9 @@
 $(function(){
-  $("#custom_search_group").hide();
+
+  if(! $("#custom_search").prop("checked")){
+    $("#custom_search_group").hide();
+  }
+
   $("#custom_search").change(function() {
     if($(this).prop("checked")){
       $("#custom_search_group").show();
@@ -12,6 +16,9 @@ $(function(){
     if($("#search_lang").val().length == 0) {
       $("#search_alert").removeClass("hide");
       e.preventDefault();
+    } else {
+      $("#main_form").addClass("hide");
+      $("#loader").removeClass("hide");
     }
   });
 });
