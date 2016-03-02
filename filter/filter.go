@@ -4,6 +4,7 @@ import (
 	"log"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/johnsudaar/gitngo/gitprocessor"
 )
@@ -66,13 +67,24 @@ func Filter(repositories []gitprocessor.GitRepository, language string, maxRouti
 // Function used as a subroutine in the Filter method
 func filterWorker(repository gitprocessor.GitRepository, language string, ok chan RepositoryStats, failed chan int) {
 	repoLanguages := *gitprocessor.GetRepositoryLanguages(repository.FullName)
-	val, exists := repoLanguages[language]
+
+	exists := false
+	totalBytes := 0
+	langBytes := 0
+	for lang, b := range repoLanguages {
+		if strings.ToLower(lang) == strings.ToLower(language) {
+			exists = true
+			langBytes = b
+		}
+		totalBytes = totalBytes + b
+	}
 	// If this repository is using this language
 	if exists {
 		// Send the correct information in the ok channel
 		repo := RepositoryStats{
 			Repository: repository,
-			Bytes:      val,
+			Bytes:      langBytes,
+			Percentage: 100.0 * float64(langBytes) / float64(totalBytes),
 		}
 		ok <- repo
 	} else {

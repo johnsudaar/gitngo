@@ -9,6 +9,7 @@
       <thead>
         <th> Repository </th>
         <th> {{.Language}} bytes </th>
+        <th> Percentage in project </th>
         <th> Link </th>
       </thead>
       <tbody>
@@ -18,6 +19,7 @@
               <a target="_blank" href="{{.Repository.HTMLURL}}"> {{.Repository.FullName}}</a>
             </td>
             <td>{{.Bytes}} </td>
+            <td>{{round .Percentage 2}}%</td>
             <td>
               <a target="_blank" class="btn btn-success" href="{{.Repository.HTMLURL}}" role="button">View</a>
             </td>

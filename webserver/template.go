@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"html/template"
 	"log"
+	"math"
 	"net/http"
 )
 
@@ -15,6 +16,9 @@ func render(w http.ResponseWriter, page string, data interface{}) {
 		"marshal": func(v interface{}) template.JS {
 			a, _ := json.Marshal(v)
 			return template.JS(a)
+		},
+		"round": func(v float64, n int) float64 {
+			return float64(int(v*math.Pow(10, float64(n)))) / math.Pow(10, float64(n))
 		},
 	})
 	t = template.Must(t.ParseFiles(RessourcePath+"/html/layout.html.tmpl", "ressources/html/"+page))
