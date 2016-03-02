@@ -30,7 +30,7 @@ docker run --name="gitngo" --publish="8080:8080" --env="GITHUB_KEY=<KEY>" johnsu
 ## Utilisation
 Une fois lancé, le serveur donne accès à deux ressources :
 
-### Acceuil
+### Accueil
 
 `Path : GET / `
 
@@ -38,8 +38,7 @@ Cette route correspond à la page d'accueil du site web. Cette page vous permet 
 
 De base cette recherche va se faire sur les 100 derniers projets mis à jour, mais en activant la recherche avancée, vous pouvez spécifier un champ de recherche et chercher, par exemple, les 100 derniers projets mise à jour par docker (en utilisant le filtre : `user:docker`).
 
-Notes :
-* Le filtre langage est sensible à la casse.
+Note :
 * Vous pouvez utiliser tous les filtres github détailés [sur cette page](https://help.github.com/articles/searching-repositories/).
 
 ### Recherche
