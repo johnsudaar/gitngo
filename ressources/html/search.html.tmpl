@@ -1,5 +1,5 @@
 {{define "content"}}
-  <h3> {{.Language}} : {{.Total}} Bytes</h3>
+  <h3> {{title .Language}} : {{.Total}} Bytes</h3>
   <div id="piecontainer">
   </div>
   <div id="barcontainer">
@@ -8,7 +8,7 @@
     <table class="table table-striped">
       <thead>
         <th> Repository </th>
-        <th> {{.Language}} bytes </th>
+        <th> {{title .Language}} bytes </th>
         <th> Percentage in project </th>
         <th> Link </th>
       </thead>
