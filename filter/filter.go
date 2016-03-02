@@ -12,7 +12,7 @@ import (
 func Filter(repositories []gitprocessor.GitRepository, language string, maxRoutines int) Stats {
 
 	// Checking if maxRoutines is in a correct range.
-	if maxRoutines < 1 && maxRoutines > 100 {
+	if maxRoutines < 1 || maxRoutines > 100 {
 		maxRoutines = 10
 	}
 
