@@ -11,6 +11,9 @@ import (
 	"github.com/justinas/alice"
 )
 
+// RessourcePath store the ressources access path.
+var RessourcePath string
+
 // Start is the function used to launch the webserver
 // The port argument specifies the port number which will be used by the webserver
 // This function will return the error returned by the http.ListenAndServe method
@@ -22,7 +25,7 @@ func Start(port int) error {
 	router.GET(logged("/search", searchHandler))
 
 	// Assets configuration
-	fs := http.FileServer(http.Dir("ressources/assets/"))
+	fs := http.FileServer(http.Dir(RessourcePath + "/assets/"))
 	router.NotFound = http.StripPrefix("/assets/", fs)
 	log.Println("[WEB] Listenning at : :" + strconv.Itoa(port))
 	return http.ListenAndServe(":"+strconv.Itoa(port), router)

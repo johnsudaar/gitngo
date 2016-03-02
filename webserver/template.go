@@ -17,7 +17,7 @@ func render(w http.ResponseWriter, page string, data interface{}) {
 			return template.JS(a)
 		},
 	})
-	t = template.Must(t.ParseFiles("ressources/html/layout.html.tmpl", "ressources/html/"+page))
+	t = template.Must(t.ParseFiles(RessourcePath+"/html/layout.html.tmpl", "ressources/html/"+page))
 	err := t.ExecuteTemplate(w, "layout", data)
 	if err != nil {
 		log.Fatal(err.Error())
