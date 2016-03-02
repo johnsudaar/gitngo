@@ -1,34 +1,43 @@
 {{define "content"}}
-  <h3> {{title .Language}} : {{.Total}} Bytes</h3>
-  <div id="piecontainer">
-  </div>
-  <div id="barcontainer">
-  </div>
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <th> Repository </th>
-        <th> {{title .Language}} bytes </th>
-        <th> Percentage in project </th>
-        <th> Link </th>
-      </thead>
-      <tbody>
-        {{range .Repositories}}
-          <tr>
-            <td>
-              <a target="_blank" href="{{.Repository.HTMLURL}}" data-toggle="tooltip" data-placement="top" title="{{.Repository.Description}}"> {{.Repository.FullName}}</a>
-            </td>
-            <td>{{.Bytes}} </td>
-            <td>{{round .Percentage 2}}%</td>
-            <td>
-              <a target="_blank" class="btn btn-success" href="{{.Repository.HTMLURL}}" role="button">View</a>
-            </td>
-          </tr>
-        {{end}}
-      <tbody>
-    </table>
-  </div>
-  <script>
-  repositories = {{marshal .Repositories}}
-  </script>
+  {{ if .Total }}
+    <h3> {{title .Language}} : {{.Total}} Bytes</h3>
+    <div id="piecontainer">
+    </div>
+    <div id="barcontainer">
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <th> Repository </th>
+          <th> {{title .Language}} bytes </th>
+          <th> Percentage in project </th>
+          <th> Link </th>
+        </thead>
+        <tbody>
+          {{range .Repositories}}
+            <tr>
+              <td>
+                <a target="_blank" href="{{.Repository.HTMLURL}}" data-toggle="tooltip" data-placement="top" title="{{.Repository.Description}}"> {{.Repository.FullName}}</a>
+              </td>
+              <td>{{.Bytes}} </td>
+              <td>{{round .Percentage 2}}%</td>
+              <td>
+                <a target="_blank" class="btn btn-success" href="{{.Repository.HTMLURL}}" role="button">View</a>
+              </td>
+            </tr>
+          {{end}}
+        <tbody>
+      </table>
+    </div>
+    <script>
+    repositories = {{marshal .Repositories}}
+    </script>
+  {{else}}
+    There was no repository found for the language {{title .Language}}.<br/>
+    If you've used a custom query please check that the query respect the <a href="https://help.github.com/articles/searching-repositories/"> github syntax </a>.
+    And verify that there are some repository corresponding to this query that use {{title .Language}}.
+    </br>
+    </br>
+    This error can also happen when you've exceeded your github API rate limit. Please check that you've set your GITHUB API KEY.
+  {{end}}
 {{end}}
