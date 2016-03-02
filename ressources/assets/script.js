@@ -23,7 +23,7 @@ $(function () {
   for(var i = 0; i < repositories.length ; i ++) {
     data_pie.push({
       name: repositories[i].repository.name,
-      y: repositories[i].lines
+      y: repositories[i].bytes
     })
     d = new Date(repositories[i].repository.created_at);
     data_bars[d.getDay()]++;

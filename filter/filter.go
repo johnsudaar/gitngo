@@ -37,7 +37,7 @@ func Filter(repositories []gitprocessor.GitRepository, language string) Stats {
 		case stat := <-ok:
 			// If the language was found
 			stats.Repositories[curPos] = stat
-			stats.Total = stats.Total + stats.Repositories[curPos].Lines
+			stats.Total = stats.Total + stats.Repositories[curPos].Bytes
 			curPos++
 		case <-failed:
 			// Else
@@ -69,7 +69,7 @@ func filterWorker(repository gitprocessor.GitRepository, language string, ok cha
 		// Send the correct information in the ok channel
 		repo := RepositoryStats{
 			Repository: repository,
-			Lines:      val,
+			Bytes:      val,
 		}
 		ok <- repo
 	} else {
