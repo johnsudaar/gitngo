@@ -16,6 +16,9 @@ $(function(){
   });
 });
 
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 
 $(function () {
   data_pie = [];

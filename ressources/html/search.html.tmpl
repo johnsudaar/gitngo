@@ -16,7 +16,7 @@
         {{range .Repositories}}
           <tr>
             <td>
-              <a target="_blank" href="{{.Repository.HTMLURL}}"> {{.Repository.FullName}}</a>
+              <a target="_blank" href="{{.Repository.HTMLURL}}" data-toggle="tooltip" data-placement="top" title="{{.Repository.Description}}"> {{.Repository.FullName}}</a>
             </td>
             <td>{{.Bytes}} </td>
             <td>{{round .Percentage 2}}%</td>
