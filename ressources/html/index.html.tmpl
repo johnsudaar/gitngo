@@ -12,9 +12,15 @@
         <input type="checkbox" id="custom_search" name="custom"> Custom search
       </label>
     </div>
-    <div class="form-group" id="custom_search_group">
-      <label for="query"> Search : </label>
-      <input type="text" class="form-control" placeholder="user:docker" name="query"/>
+    <div id="custom_search_group">
+      <div class="form-group">
+        <label for="query"> Search : </label>
+        <input type="text" class="form-control" placeholder="user:docker" name="query"/>
+      </div>
+      <div class="form-group">
+        <label for="max_routines"> Max Routines : </label>
+        <input type="number" class="form-control" value="10" step="1" name="max_routines"/>
+      </div>
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
   </form>

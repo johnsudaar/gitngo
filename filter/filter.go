@@ -9,10 +9,13 @@ import (
 )
 
 // Filter will filter each repository found and count the number of lines of code written in the language passed as parameter.
-func Filter(repositories []gitprocessor.GitRepository, language string) Stats {
+func Filter(repositories []gitprocessor.GitRepository, language string, maxRoutines int) Stats {
 
-	// Will define the number of subroutines launched
-	maxRoutines := 10
+	// Checking if maxRoutines is in a correct range.
+	if maxRoutines < 1 && maxRoutines > 100 {
+		maxRoutines = 10
+	}
+
 	log.Println("[FILTER] Starting with " + strconv.Itoa(maxRoutines) + " routines...")
 	// Two channels are made 1 if the language is found in the repository and 1 if the language is not found
 	ok := make(chan RepositoryStats, len(repositories))

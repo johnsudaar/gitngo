@@ -45,11 +45,12 @@ Notes :
 ### Recherche
 `Path : GET /search`
 
-Cette page va chercher et présenter les résultats en fonction de 3 paramètres.
+Cette page va chercher et présenter les résultats en fonction de 4 paramètres.
 
 * language : Doit obligatoirement être présent, permet de chosir le language sur lequel on veut filtrer.
 * custom : Doit être sur 'on' si l'on veut faire une recherche avancée.
 * query : la requète a executer (le champ custom doit être présent pour que ce champ soit pris en compte)
+* max_routines : le serveur utilisera au maximum ce nombre de routines pour faire le calcul (le champ custom doit être présent pour que ce champ soit pris en compte)
 
 ## Fonctionnement
 

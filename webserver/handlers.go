@@ -2,6 +2,7 @@ package webserver
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/johnsudaar/gitngo/filter"
 	"github.com/johnsudaar/gitngo/gitprocessor"
@@ -19,6 +20,8 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query().Get("query")
 	customQuery := r.URL.Query().Get("custom")
 	language := r.URL.Query().Get("language")
+	maxRoutinesV := r.URL.Query().Get("max_routines")
+	maxRoutines := 10
 	if len(language) == 0 {
 		http.Redirect(w, r, "/", 307)
 	} else {
@@ -26,8 +29,12 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 			query = "stars:>=0"
 		}
 
+		if i, err := strconv.Atoi(maxRoutinesV); (err == nil) && (len(customQuery) != 0) {
+			maxRoutines = i
+		}
+
 		repositories := gitprocessor.GetGithubRepositories(query)
-		stats := filter.Filter(repositories, language)
+		stats := filter.Filter(repositories, language, maxRoutines)
 		render(w, "search.html.tmpl", stats)
 	}
 }
