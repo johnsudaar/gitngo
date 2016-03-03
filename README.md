@@ -24,7 +24,7 @@ Pour utiliser le mode authentifié il suffit de mettre le token d'identification
 Une image est disponible sur le docker hub. Pour lancer le service il suffit donc de lancer la commande suivante :
 
 ```shell
-docker run --name="gitngo" --publish="8080:8080" --env="GITHUB_KEY=<KEY>" johnsudaar/gitngo
+docker run --name="gitngo" --rm --publish="8080:8080" --env="GITHUB_KEY=<KEY>" johnsudaar/gitngo
 ```
 
 ## Utilisation
@@ -46,11 +46,11 @@ Note :
 
 Cette page va chercher et présenter les résultats en fonction de 4 paramètres.
 
-* language : Doit obligatoirement être présent, permet de choisir le langage sur lequel on veut filtrer.
-* custom : Doit être sur 'on' si l'on veut faire une recherche avancée.
-* query : la requête à exécuter (le champ custom doit être présent pour que ce champ soit pris en compte)
-* max_routines : le serveur utilisera au maximum ce nombre de routines pour faire le calcul (le champ custom doit être présent pour que ce champ soit pris en compte)
-* no_lines : le serveur ne calculera pas le nombre de lignes écrite. (Accélère grandement la recherche).
+* `language` : Doit obligatoirement être présent, permet de choisir le langage sur lequel on veut filtrer.
+* `custom` : Doit être sur 'on' si l'on veut faire une recherche avancée.
+* `query` : la requête à exécuter (le champ `custom` doit être présent pour que ce champ soit pris en compte)
+* `max_routines` : le serveur utilisera au maximum ce nombre de routines pour faire le calcul (le champ `custom` doit être présent pour que ce champ soit pris en compte)
+* `no_lines` : Doit être sur 'on' pour que le serveur ne calcule pas le nombre de lignes écrite. (Accélère grandement la recherche) (le champ `custom` doit être présent pour que ce champ soit pris en compte).
 
 ## Fonctionnement
 
@@ -66,7 +66,7 @@ Ce module sert à récupérer les requêtes HTTP entrantes et à générer les r
 Il est décomposé en plusieurs parties.
 Les handlers sont les fonctions qui sont appelés lors du chargement d'une page. Leur but est de récupérer les données nécessaires au chargement des pages et de charger le template adéquat.
 
-Le moteur de template utilisé est celui fourni dans le package html/template. Une fonction render à été ajouté permettant de simplifier son utilisation.
+Le moteur de template utilisé est celui fourni dans le package `html/template`. Une fonction render à été ajouté permettant de simplifier son utilisation.
 
 Pour le routeur (fichier webserver.go), nous utilisons httprouter. Il y a deux types de routes. Les routes "connues" qui sont directement relièes aux Handler et le 404 qui est relié à un serveur de fichier pour servir les assets. De plus un adaptateur pour ajouter des middleware à été ajouté permettant d'utiliser alice (bien que pas forcement utile dans ce cas précis). Et un middleware permettant de logger les actions à été ajouté.
 
@@ -74,12 +74,12 @@ Pour le routeur (fichier webserver.go), nous utilisons httprouter. Il y a deux t
 
 Ce module est en charge de la communication avec l'API github. Il fournit trois fonctions utiles :
 
-GetRepositoryLanguages : qui permet de récupérer les langages utilisés dans un repository*
-GetGithubRepositories : qui permet de récupérer les 100 derniers repositories correspondant à une certaine requête.
-GetRepositoryLines : qui permet de récupérer le nombre de lignes écrites dans un repository.
+* `GetRepositoryLanguages` : qui permet de récupérer les langages utilisés dans un repository
+* `GetGithubRepositories` : qui permet de récupérer les 100 derniers repositories correspondant à une certaine requête.
+* `GetRepositoryLines` : qui permet de récupérer le nombre de lignes écrites dans un repository.
 
 Note :
-GetRepositoryLines n'est pas fiable. Elle est basée sur la statistique `code_frequency` qui est sensé nous donner les lignes ajoutées et supprimées pour chaque semaine sur la branche par défaut du repository. Cependant sur certains repository le nombre de lignes ajoutées est supérieur au nombre de lignes supprimées. (Ex : zorluhan/spogram)
+GetRepositoryLines n'est pas fiable. Elle est basée sur la statistique `code_frequency` qui doit nous donner les lignes ajoutées et supprimées pour chaque semaine sur la branche par défaut du repository. Cependant sur certains repository le nombre de lignes ajoutées est supérieur au nombre de lignes supprimées. (Ex : zorluhan/spogram)
 
 Pour simplifier les appels HTTP, ce module se base sur le package sling.
 
@@ -95,8 +95,8 @@ Pour l'affichage des graph, c'est la librairie HighCharts qui est utilisée.
 ### Calcul du nombre de lignes (Expérimental)
 
 Vu que github ne nous donne pas le nombre de lignes écrites pour un projet (et encore moins pour un projet par langage),
-nous le serveur essaie d'estimer le nombre de lignes d'un repository en utilisant les statistiques (additions/deletions) par semaine sur la branche par défaut.
-En suite pour estimer le nombre de lignes par langage, nous calculons le ratio : BytesDansCeLanguage / BytesTotal que nous appliquons au nombre total de lignes.
+le serveur essaie d'estimer le nombre de lignes d'un repository en utilisant les statistiques (additions/deletions) par semaine sur la branche par défaut.
+Pour estimer le nombre de lignes par langage, nous calculons le ratio : BytesDansCeLanguage / BytesTotal que nous appliquons au nombre total de lignes.
 
 A cause de l'approximation faite par la règle de 3 et de l'inexactitude des données fournis par l'API github. Le champ lignes peut parfois être assez loin du compte.
 
