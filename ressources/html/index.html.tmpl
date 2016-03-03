@@ -1,12 +1,13 @@
 {{define "content"}}
   <div id="main_form">
+    <h1 class="text-center"> Get language usage statistics in the latest 100 github repositories</h1>
     <div id="search_alert" class="alert alert-danger hide" role="alert">
       Please fill in the language field.
     </div>
     <form action="/search" id="search-form">
       <div class="form-group">
         <label for="language" > Language : </label>
-        <input id="search_lang" type="text" class="form-control" placeholder="Go" name="language" required/>
+        <input id="search_lang" type="text" class="form-control" placeholder="Javascript" name="language" required/>
       </div>
       <div class="checkbox">
         <label>
@@ -34,5 +35,9 @@
   <div id="loader" class="hide">
     <h3> Processing ... </h3>
     <img src="/assets/loading.gif" class="img-responsive center-block" id="loader"/>
+    <div class="alert alert-info hide" role="alert" id="long_time_alert">
+      This request is taking a long time to respond. This can be normal if the "Do not estimate lines" field is not checked. <br/>
+      Try checking "Do not estimate lines" in the advanced search form for fastest responses.
+    </div>
   </div>
 {{end}}

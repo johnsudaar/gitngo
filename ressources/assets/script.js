@@ -25,6 +25,10 @@ $(function(){
       // else, show the loading icon
       $("#main_form").addClass("hide");
       $("#loader").removeClass("hide");
+      setTimeout(function(){
+        console.log("Hello World");
+        $("#long_time_alert").removeClass("hide");
+      }, 7000);
     }
   });
 });
@@ -36,19 +40,21 @@ $(function () {
 
 
 $(function () {
-  // Data used to generate the pie chart
-  data_pie = [];
-  // Data used to generate the bar chart (7 days, 0 repository per day)
-  data_bars = [0,0,0,0,0,0,0];
+  if(repositories) {
+    // Data used to generate the pie chart
+    data_pie = [];
+    // Data used to generate the bar chart (7 days, 0 repository per day)
+    data_bars = [0,0,0,0,0,0,0];
 
-  // Filling in the data_bars array by looping over the repository tab.
-  for(var i = 0; i < repositories.length ; i ++) {
-    data_pie.push({
-      name: repositories[i].repository.name,
-      y: repositories[i].bytes
-    })
-    d = new Date(repositories[i].repository.created_at);
-    data_bars[d.getDay()]++;
+    // Filling in the data_bars array by looping over the repository tab.
+    for(var i = 0; i < repositories.length ; i ++) {
+      data_pie.push({
+        name: repositories[i].repository.name,
+        y: repositories[i].bytes
+      })
+      d = new Date(repositories[i].repository.created_at);
+      data_bars[d.getDay()]++;
+    }
   }
 
   // --------------------------------------------
