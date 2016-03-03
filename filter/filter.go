@@ -10,7 +10,7 @@ import (
 )
 
 // Filter will filter each repository found and count the number of lines of code written in the language passed as parameter.
-func Filter(repositories []gitprocessor.GitRepository, language string, maxRoutines int) Stats {
+func Filter(repositories []gitprocessor.GitRepository, language string, maxRoutines int, getLines bool) Stats {
 
 	// Checking if maxRoutines is in a correct range.
 	if maxRoutines < 1 || maxRoutines > 100 {
@@ -31,7 +31,7 @@ func Filter(repositories []gitprocessor.GitRepository, language string, maxRouti
 
 	// Launching the first subroutines
 	for i := 0; i < len(repositories) && i < maxRoutines; i++ {
-		go filterWorker(repositories[i], language, ok, failed)
+		go filterWorker(repositories[i], language, getLines, ok, failed)
 	}
 
 	// curPos store the currentPosition in the result array
@@ -53,7 +53,7 @@ func Filter(repositories []gitprocessor.GitRepository, language string, maxRouti
 		// At this point we know that a subroutine has terminated so its safe to re-run one.
 		if i+maxRoutines < len(repositories) {
 			// Run one
-			go filterWorker(repositories[i+maxRoutines], language, ok, failed)
+			go filterWorker(repositories[i+maxRoutines], language, getLines, ok, failed)
 		}
 	}
 	log.Println("[FILTER] Resizing and sorting...")
@@ -67,7 +67,7 @@ func Filter(repositories []gitprocessor.GitRepository, language string, maxRouti
 }
 
 // Function used as a subroutine in the Filter method
-func filterWorker(repository gitprocessor.GitRepository, language string, ok chan RepositoryStats, failed chan int) {
+func filterWorker(repository gitprocessor.GitRepository, language string, getLines bool, ok chan RepositoryStats, failed chan int) {
 	repoLanguages := *gitprocessor.GetRepositoryLanguages(repository.FullName)
 
 	exists := false
@@ -84,9 +84,12 @@ func filterWorker(repository gitprocessor.GitRepository, language string, ok cha
 	if exists {
 		// The number of lines written in this specific language will be estimated by getting the total lines number. Using this formula :
 		// estimatedLines = (BytesWrittenInTheLanguage/TotalBytes)*TotalLines
-
-		totalLines := gitprocessor.GetRepositoryLines(repository.FullName)
-		estimatedLines := (langBytes * totalLines) / totalBytes
+		totalLines := 0
+		estimatedLines := 0
+		if getLines {
+			totalLines = gitprocessor.GetRepositoryLines(repository.FullName)
+			estimatedLines = (langBytes * totalLines) / totalBytes
+		}
 		// Send the correct information in the ok channel
 		repo := RepositoryStats{
 			Repository:    repository,

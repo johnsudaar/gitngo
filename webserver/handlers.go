@@ -20,6 +20,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query().Get("query")
 	customQuery := r.URL.Query().Get("custom")
 	language := r.URL.Query().Get("language")
+	getLines := len(r.URL.Query().Get("no_lines")) == 0
 	maxRoutinesV := r.URL.Query().Get("max_routines")
 	maxRoutines := 10
 	if len(language) == 0 {
@@ -33,8 +34,11 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 			maxRoutines = i
 		}
 
+		// Disable custom getLines field if the customQuery field is not checked.
+		getLines = getLines || len(customQuery) == 0
+
 		repositories := gitprocessor.GetGithubRepositories(query)
-		stats := filter.Filter(repositories, language, maxRoutines)
+		stats := filter.Filter(repositories, language, maxRoutines, getLines)
 		render(w, "search.html.tmpl", stats)
 	}
 }

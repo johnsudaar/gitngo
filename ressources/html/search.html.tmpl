@@ -1,6 +1,12 @@
 {{define "content"}}
   {{ if .TotalBytes }}
-    <h3> {{title .Language}} : {{.TotalBytes}} Bytes ( Approx. {{.TotalLines}} lines.)</h3>
+    <h3>
+      {{ if .TotalLines }}
+        {{title .Language}} : {{.TotalBytes}} Bytes ( Approx. {{.TotalLines}} lines.)
+      {{ else }}
+        {{title .Language}} : {{.TotalBytes}} Bytes 
+      {{ end }}
+    </h3>
     <div id="piecontainer">
     </div>
     <div id="barcontainer">
@@ -22,7 +28,13 @@
               </td>
               <td>{{.Bytes}} </td>
               <td>{{round .Percentage 2}}%</td>
-              <td>{{.LanguageLines}}
+              <td>
+                {{ if .LanguageLines}}
+                  {{.LanguageLines}}
+                {{ else }}
+                  Unknown
+                {{ end }}
+              </td>
               <td>
                 <a target="_blank" class="btn btn-success" href="{{.Repository.HTMLURL}}" role="button">View</a>
               </td>

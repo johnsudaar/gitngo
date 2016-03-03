@@ -50,6 +50,7 @@ Cette page va chercher et présenter les résultats en fonction de 4 paramètres
 * custom : Doit être sur 'on' si l'on veut faire une recherche avancée.
 * query : la requête à exécuter (le champ custom doit être présent pour que ce champ soit pris en compte)
 * max_routines : le serveur utilisera au maximum ce nombre de routines pour faire le calcul (le champ custom doit être présent pour que ce champ soit pris en compte)
+* no_lines : le serveur ne calculera pas le nombre de lignes écrite. (Accélère grandement la recherche).
 
 ## Fonctionnement
 
@@ -98,3 +99,7 @@ nous le serveur essaie d'estimer le nombre de lignes d'un repository en utilisan
 En suite pour estimer le nombre de lignes par langage, nous calculons le ratio : BytesDansCeLanguage / BytesTotal que nous appliquons au nombre total de lignes.
 
 A cause de l'approximation faite par la règle de 3 et de l'inexactitude des données fournis par l'API github. Le champ lignes peut parfois être assez loin du compte.
+
+Vu que les statistiques fournis par github ne sont pas toujours disponible en cache, il faut parfois lui laisser le temps de calculer les résultats. Dans notre cas nous lui laissons 1s pour les calculer. (20 essais espacés de 50ms).
+
+Cette étape étant extrèmement lente, le calcul du nombre de lignes peut être désactive en utilisant le paramêtre `no_lines`. (Aussi disponible depuis la recherche avancée).
