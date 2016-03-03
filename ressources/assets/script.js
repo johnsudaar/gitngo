@@ -1,9 +1,11 @@
 $(function(){
 
+  // Hide custom search form (unless the checkbox is already checked (Using back))
   if(! $("#custom_search").prop("checked")){
     $("#custom_search_group").hide();
   }
 
+  // Hide/Show custom search form
   $("#custom_search").change(function() {
     if($(this).prop("checked")){
       $("#custom_search_group").show();
@@ -12,24 +14,34 @@ $(function(){
     }
   });
 
+  // On Search form validation
   $("#search-form").submit(function(e){
+    // If there was no language specified
     if($("#search_lang").val().length == 0) {
+      // Show error message and prevent from continuing
       $("#search_alert").removeClass("hide");
       e.preventDefault();
     } else {
+      // else, show the loading icon
       $("#main_form").addClass("hide");
       $("#loader").removeClass("hide");
     }
   });
 });
 
+// Boostrap intitialisations
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 
+
 $(function () {
+  // Data used to generate the pie chart
   data_pie = [];
+  // Data used to generate the bar chart (7 days, 0 repository per day)
   data_bars = [0,0,0,0,0,0,0];
+
+  // Filling in the data_bars array by looping over the repository tab.
   for(var i = 0; i < repositories.length ; i ++) {
     data_pie.push({
       name: repositories[i].repository.name,
@@ -38,6 +50,10 @@ $(function () {
     d = new Date(repositories[i].repository.created_at);
     data_bars[d.getDay()]++;
   }
+
+  // --------------------------------------------
+  // -            PIE CHART GENERATION          -
+  // --------------------------------------------
   $('#piecontainer').highcharts({
     chart: {
       plotBackgroundColor: null,
@@ -71,6 +87,11 @@ $(function () {
       }]
     }
   );
+
+  // --------------------------------------------
+  // -            BAR CHART GENERATION          -
+  // --------------------------------------------
+
   $('#barcontainer').highcharts({
         chart: {
             type: 'column'
