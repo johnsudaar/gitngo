@@ -80,11 +80,18 @@ func filterWorker(repository gitprocessor.GitRepository, language string, ok cha
 	}
 	// If this repository is using this language
 	if exists {
+		// The number of lines written in this specific language will be estimated by getting the total lines number. Using this formula :
+		// estimatedLines = (BytesWrittenInTheLanguage/TotalBytes)*TotalLines
+
+		totalLines := gitprocessor.GetRepositoryLines(repository.FullName)
+		estimatedLines := (langBytes * totalLines) / totalBytes
 		// Send the correct information in the ok channel
 		repo := RepositoryStats{
-			Repository: repository,
-			Bytes:      langBytes,
-			Percentage: 100.0 * float64(langBytes) / float64(totalBytes),
+			Repository:    repository,
+			Bytes:         langBytes,
+			Percentage:    100.0 * float64(langBytes) / float64(totalBytes),
+			TotalLines:    totalLines,
+			LanguageLines: estimatedLines,
 		}
 		ok <- repo
 	} else {

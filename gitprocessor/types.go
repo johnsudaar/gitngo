@@ -28,3 +28,8 @@ type gitQueryResponse struct {
 
 // GitLanguages is a simple representation of the git language response json object
 type GitLanguages map[string]int
+
+// gitCodeFrequency is the github representation of addition and deletion per week.
+// This is an array of array of int.
+// For each weeks, there is an three entry array with : timestamp, addition, deletion
+type gitCodeFrequency [][]int
