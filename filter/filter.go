@@ -24,7 +24,8 @@ func Filter(repositories []gitprocessor.GitRepository, language string, maxRouti
 
 	stats := Stats{
 		Language:     language,
-		Total:        0,
+		TotalBytes:   0,
+		TotalLines:   0,
 		Repositories: make([]RepositoryStats, 100), // We do not know the array length in advance. We've make it bigger and we will resize it later.
 	}
 
@@ -41,7 +42,8 @@ func Filter(repositories []gitprocessor.GitRepository, language string, maxRouti
 		case stat := <-ok:
 			// If the language was found
 			stats.Repositories[curPos] = stat
-			stats.Total = stats.Total + stats.Repositories[curPos].Bytes
+			stats.TotalBytes += stats.Repositories[curPos].Bytes
+			stats.TotalLines += stats.Repositories[curPos].LanguageLines
 			curPos++
 		case <-failed:
 			// Else

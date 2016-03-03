@@ -16,7 +16,8 @@ type RepositoryStats struct {
 // It hold all the informations extracted from the Github repositories.
 type Stats struct {
 	Language     string            `json:"language"`
-	Total        int               `json:"total"`
+	TotalBytes   int               `json:"total_bytes"`
+	TotalLines   int               `json:"total_lines"`
 	Repositories []RepositoryStats `json:"repositories"`
 }
 

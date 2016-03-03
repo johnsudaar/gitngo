@@ -1,6 +1,6 @@
 {{define "content"}}
-  {{ if .Total }}
-    <h3> {{title .Language}} : {{.Total}} Bytes</h3>
+  {{ if .TotalBytes }}
+    <h3> {{title .Language}} : {{.TotalBytes}} Bytes ( Approx. {{.TotalLines}} lines.)</h3>
     <div id="piecontainer">
     </div>
     <div id="barcontainer">
