@@ -65,7 +65,7 @@ $(function () {
       text: 'Language repartition'
     },
     tooltip: {
-      pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+      pointFormat: '{point.name}: <b>{point.y} Bytes ({point.percentage:.1f}%)</b>'
     },
     plotOptions: {
       pie: {
@@ -119,7 +119,7 @@ $(function () {
         },
         tooltip: {
             headerFormat: '<p style="font-size:15px">{point.key}</p>',
-            pointFormat: '{point.y:.1f}',
+            pointFormat: '{point.y}',
             shared: true,
             useHTML: true
         },
